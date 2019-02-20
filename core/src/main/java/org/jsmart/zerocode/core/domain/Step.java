@@ -11,6 +11,13 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * let it spit out the exception(s) in case of a bad json/test input
  */
 //@JsonIgnoreProperties(ignoreUnknown = true)
+/*
+* @Description: 测试json文件子对象
+* @author: aries
+* @date: 2019-02-20 11:16
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/
 public class Step {
     private final Integer loop;
     private final String name;

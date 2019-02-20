@@ -8,13 +8,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+/*
+* @Description: 测试json文件对象
+* @author: aries
+* @date: 2019-02-20 11:15
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/
 public class ScenarioSpec {
 
     private final Integer loop;
     private final Boolean ignoreStepFailures;
     private final String scenarioName;
     private final List<Step> steps;
-
+    /*
+    * @Description: 测试json对象构造函数
+    * @author: aries
+    * @date: 2019-02-20 11:18
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     @JsonCreator
     public ScenarioSpec(
             @JsonProperty("stepLoop") Integer loop,

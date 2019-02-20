@@ -17,7 +17,13 @@ import java.util.concurrent.Executors;
 
 import static org.jsmart.zerocode.core.domain.reports.ZeroCodeReportProperties.TARGET_REPORT_DIR;
 import static org.slf4j.LoggerFactory.getLogger;
-
+/*
+* @Description: 结果构建类
+* @author: aries
+* @date: 2019-02-20 10:48
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/
 public class ZeroCodeReportBuilder {
     private static final org.slf4j.Logger LOGGER = getLogger(ZeroCodeReportBuilder.class);
     public static final int REPORT_WRITING_THREAD_POOL = 5;

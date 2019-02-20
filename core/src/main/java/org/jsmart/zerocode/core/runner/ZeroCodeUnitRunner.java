@@ -4,7 +4,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.util.Modules;
 import org.jsmart.zerocode.core.di.main.ApplicationMainModule;
-import org.jsmart.zerocode.core.di.module.PropertiesInjectorModule;
 import org.jsmart.zerocode.core.di.module.RuntimeHttpClientModule;
 import org.jsmart.zerocode.core.di.module.RuntimeKafkaClientModule;
 import org.jsmart.zerocode.core.domain.*;
@@ -46,6 +45,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(ZeroCodeUnitRunner.class);
 
     private ZeroCodeMultiStepsScenarioRunner zeroCodeMultiStepsScenarioRunner;
+//    当前测试类
     private final Class<?> testClass;
     private Injector injector;
     private SmartUtils smartUtils;
@@ -105,7 +105,6 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
 
     @Override
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
-
         final Description description = describeChild(method);
         JsonTestCase annotation = method.getMethod().getAnnotation(JsonTestCase.class);
 
