@@ -25,7 +25,13 @@ public class HighChartColumnHtmlWriter {
 
     public HighChartColumnHtmlWriter() {
     }
-
+    /*
+    * @Description: html模版
+    * @author: aries
+    * @date: 2019-02-21 13:49
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     public HighChartColumnHtmlWriter(String templateFile) {
         this.templateFile = templateFile;
     }
@@ -40,6 +46,7 @@ public class HighChartColumnHtmlWriter {
 
         /*  add the htmlReport Params to a VelocityContext  */
         context.put("highChartColumnHtml", highChartColumnHtml);
+        System.out.println("------=========ChartSeriesName:"+highChartColumnHtml.getChartSeriesName());
 
         /*  get the Template  */
         Template t = vEngine.getTemplate(getTemplateFileElseDefault());
@@ -70,7 +77,13 @@ public class HighChartColumnHtmlWriter {
 
         return htmlOut;
     }
-
+    /*
+    * @Description: 获取报告模版
+    * @author: aries
+    * @date: 2019-02-21 13:48
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     private String getTemplateFileElseDefault() {
 
         if(templateFile != null){

@@ -49,7 +49,13 @@ public class ExtentReportsFactory {
         extentReports.setSystemInfo("OS Architecture : ", osArchitecture);
         extentReports.setSystemInfo("Java Version : ", javaVersion);
     }
-
+    /*
+    * @Description: 创建html测试报告对象
+    * @author: aries
+    * @date: 2019-02-21 16:56
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     public static ExtentHtmlReporter createExtentHtmlReporter(String reportFileName) {
         extentHtmlReporter = new ExtentHtmlReporter(reportFileName);
 

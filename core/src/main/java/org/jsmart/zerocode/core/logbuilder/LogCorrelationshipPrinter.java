@@ -24,6 +24,7 @@ public class LogCorrelationshipPrinter {
     private ScenarioLogBuilder scenarioLogBuilder = new ScenarioLogBuilder();
     private Integer stepLoop;
     private Boolean result;
+//    response延迟
     private Double responseDelay;
 
     public LogCorrelationshipPrinter(Logger logger) {

@@ -6,7 +6,13 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+* @Description: 执行结果
+* @author: aries
+* @date: 2019-02-21 15:57
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ZeroCodeExecResult {
     private String scenarioName;

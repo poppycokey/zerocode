@@ -48,6 +48,13 @@ import static org.jsmart.zerocode.core.domain.reports.ZeroCodeReportProperties.T
 import static org.jsmart.zerocode.core.domain.reports.ZeroCodeReportProperties.TARGET_REPORT_DIR;
 import static org.jsmart.zerocode.core.domain.reports.ZeroCodeReportProperties.TEST_STEP_CORRELATION_ID;
 
+/*
+ * @Description: 注入报告生成器
+ * @author: aries
+ * @date: 2019-02-21 11:07
+ * @email: zbl686868@126.com
+ * @phone: 17611305537
+ */
 public class ZeroCodeReportGeneratorImpl implements ZeroCodeReportGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ZeroCodeReportGeneratorImpl.class);
 
@@ -79,10 +86,17 @@ public class ZeroCodeReportGeneratorImpl implements ZeroCodeReportGenerator {
     public ZeroCodeReportGeneratorImpl() {
     }
 
+    /*
+     * @Description: 生成测试报告
+     * @author: aries
+     * @date: 2019-02-21 14:41
+     * @email: zbl686868@126.com
+     * @phone: 17611305537
+     */
     @Override
     public void generateExtentReport() {
 
-        if(interactiveHtmlReportDisabled){
+        if (interactiveHtmlReportDisabled) {
             return;
         }
 
@@ -91,7 +105,6 @@ public class ZeroCodeReportGeneratorImpl implements ZeroCodeReportGenerator {
         linkToSpikeChartIfEnabled();
 
         treeReports.forEach(thisReport -> {
-
             thisReport.getResults().forEach(thisScenario -> {
                 ExtentTest test = extentReports.createTest(thisScenario.getScenarioName());
                 test.assignCategory(DEFAULT_REGRESSION_CATEGORY);
@@ -129,13 +142,14 @@ public class ZeroCodeReportGeneratorImpl implements ZeroCodeReportGenerator {
         // (might be disabled by current runner)
         // Then it's good to link it to that spike report.
         // ------------------------------------------------
-        if(spikeChartReportEnabled || spikeChartFileName != null){
+        if (spikeChartReportEnabled || spikeChartFileName != null) {
             final String reportName = getReportName();
 
             String linkCodeToTargetSpikeChartHtml =
                     String.format("<code>&nbsp;&nbsp;<a href='%s' style=\"color: #006; background: #ff6;\"> %s </a></code>",
-                    spikeChartFileName,
-                    LINK_LABEL_NAME);;
+                            spikeChartFileName,
+                            LINK_LABEL_NAME);
+            ;
 
             ExtentReportsFactory.reportName(reportName + linkCodeToTargetSpikeChartHtml);
         }
@@ -144,19 +158,19 @@ public class ZeroCodeReportGeneratorImpl implements ZeroCodeReportGenerator {
     protected String optionalAuthor(String scenarioName) {
         String authorName = substringBetween(scenarioName, AUTHOR_MARKER, AUTHOR_MARKER);
 
-        if(authorName == null){
+        if (authorName == null) {
             authorName = substringBetween(scenarioName, AUTHOR_MARKER, ",");
         }
 
-        if(authorName == null){
+        if (authorName == null) {
             authorName = substringBetween(scenarioName, AUTHOR_MARKER, " ");
         }
 
-        if(authorName == null){
+        if (authorName == null) {
             authorName = scenarioName.substring(scenarioName.lastIndexOf(AUTHOR_MARKER) + AUTHOR_MARKER.length());
         }
 
-        if(scenarioName.lastIndexOf(AUTHOR_MARKER) == -1 || StringUtils.isEmpty(authorName)){
+        if (scenarioName.lastIndexOf(AUTHOR_MARKER) == -1 || StringUtils.isEmpty(authorName)) {
             authorName = ANONYMOUS_AUTHOR;
         }
 
@@ -184,7 +198,7 @@ public class ZeroCodeReportGeneratorImpl implements ZeroCodeReportGenerator {
         /*
          * Generate: Spike Chart using HighChart
          */
-        if(spikeChartReportEnabled){
+        if (spikeChartReportEnabled) {
             HighChartColumnHtml highChartColumnHtml = convertCsvRowsToHighChartData(zeroCodeCsvFlattenedRows);
             generateHighChartReport(highChartColumnHtml);
         }
@@ -215,6 +229,13 @@ public class ZeroCodeReportGeneratorImpl implements ZeroCodeReportGenerator {
 
     }
 
+    /*
+     * @Description: 生成结果报告
+     * @author: aries
+     * @date: 2019-02-21 14:05
+     * @email: zbl686868@126.com
+     * @phone: 17611305537
+     */
     public void generateHighChartReport(HighChartColumnHtml highChartColumnHtml) {
 
         HighChartColumnHtmlWriter highChartColumnHtmlWriter = new HighChartColumnHtmlWriter();
@@ -326,7 +347,7 @@ public class ZeroCodeReportGeneratorImpl implements ZeroCodeReportGenerator {
             return name.endsWith(".json");
         });
 
-        if(files == null || files.length == 0){
+        if (files == null || files.length == 0) {
 
             LOGGER.error("\n\t\t\t************\nNow files were found in folder:{}, hence could not proceed. " +
                     "\n(If this was intentional, then you can safely ignore this error)" +

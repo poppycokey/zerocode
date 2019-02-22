@@ -9,7 +9,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+/*
+* @Description: zerocode报告
+* @author: aries
+* @date: 2019-02-21 14:56
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ZeroCodeReport {
 

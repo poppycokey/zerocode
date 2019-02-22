@@ -55,6 +55,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
     private int port;
     private List<String> smartTestCaseNames = new ArrayList<>();
     private String currentTestCase;
+//    日志关联对象
     private LogCorrelationshipPrinter logCorrelationshipPrinter;
     protected boolean testRunCompleted;
     protected boolean passed;
@@ -69,7 +70,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
      */
     public ZeroCodeUnitRunner(Class<?> klass) throws InitializationError {
         super(klass);
-
+        System.out.println("-----======测试名称："+klass.getName());
         this.testClass = klass;
         this.smartUtils = getInjectedSmartUtilsClass();
 
@@ -85,7 +86,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
             this.port = hostProperties.port();
             this.context = hostProperties.context();
         }
-
+//多步骤运行器
         this.multiStepsRunner = createZeroCodeMultiStepRunner();
     }
 
@@ -102,18 +103,25 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
 
         handleNoRunListenerReport(reportListener);
     }
-
+/*
+* @Description: 真正执行测试的方法，每个测试方法都会执行runChild
+* @author: aries
+* @date: 2019-02-21 14:24
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/
     @Override
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
+
         final Description description = describeChild(method);
         JsonTestCase annotation = method.getMethod().getAnnotation(JsonTestCase.class);
 
         if (isIgnored(method)) {
-
+//忽略测试
             notifier.fireTestIgnored(description);
 
         } else if (annotation != null) {
-
+//单json测试
             runLeafJsonTest(notifier, description, annotation);
 
         } else {
@@ -139,6 +147,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
     }
 
     public Injector getMainModuleInjector() {
+        System.out.println("-----======获取主模块注射器");
         // Synchronise this with an object lock e.g. synchronized (ZeroCodeUnitRunner.class) {}
         synchronized (this) {
             final TargetEnv envAnnotation = testClass.getAnnotation(TargetEnv.class);
@@ -183,7 +192,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
         if (annotation != null) {
             currentTestCase = annotation.value();
         }
-
+//防火测试开始
         notifier.fireTestStarted(description);
 
         LOGGER.debug("### Running currentTestCase : " + currentTestCase);
@@ -193,7 +202,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
             child = smartUtils.jsonFileToJava(currentTestCase, ScenarioSpec.class);
 
             LOGGER.debug("### Found currentTestCase : -" + child);
-
+//          使用多步骤运行器运行
             passed = multiStepsRunner.runScenario(child, notifier, description);
 
         } catch (Exception ioEx) {
@@ -271,18 +280,27 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
 
         } finally {
             LOGGER.info("JUnit test run completed. See the results in the console or log.  passed = {}", passed);
+//           准备response结果集
             prepareResponseReport(logPrefixRelationshipId);
+//          构建报告并写入到文件
             buildReportAndPrintToFile(description);
 
             eachNotifier.fireTestFinished();
         }
     }
-
+    /*
+    * @Description: 构建报告并写入到文件
+    * @author: aries
+    * @date: 2019-02-21 14:59
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     private void buildReportAndPrintToFile(Description description) {
         ZeroCodeExecResultBuilder reportResultBuilder = newInstance().loop(0).scenarioName(description.getClassName());
         reportResultBuilder.step(logCorrelationshipPrinter.buildReportSingleStep());
 
         ZeroCodeReportBuilder reportBuilder = ZeroCodeReportBuilder.newInstance().timeStamp(LocalDateTime.now());
+//      设置结果报告
         reportBuilder.result(reportResultBuilder.build());
         reportBuilder.printToFile(description.getClassName() + logCorrelationshipPrinter.getCorrelationId() + ".json");
     }
@@ -297,7 +315,13 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
         logCorrelationshipPrinter.result(passed);
         logCorrelationshipPrinter.buildResponseDelay();
     }
-
+/*
+* @Description: 准备request报告
+* @author: aries
+* @date: 2019-02-20 17:07
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/
     private String prepareRequestReport(Description description) {
         logCorrelationshipPrinter = LogCorrelationshipPrinter.newInstance(LOGGER);
         logCorrelationshipPrinter.stepLoop(0);

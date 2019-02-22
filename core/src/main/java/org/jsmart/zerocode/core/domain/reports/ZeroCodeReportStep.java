@@ -6,7 +6,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.time.LocalDateTime;
-
+/*
+* @Description: 单步骤报告对象
+* @author: aries
+* @date: 2019-02-21 16:30
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ZeroCodeReportStep {
     private final Integer loop;

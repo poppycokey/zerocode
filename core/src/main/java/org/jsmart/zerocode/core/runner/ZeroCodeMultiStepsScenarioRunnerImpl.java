@@ -79,7 +79,7 @@ public class ZeroCodeMultiStepsScenarioRunnerImpl implements ZeroCodeMultiStepsS
 
     @Override
     public synchronized boolean runScenario(ScenarioSpec scenario, RunNotifier notifier, Description description) {
-
+        System.out.println("-----======运行脚本");
         LOGGER.info("\n-------------------------- BDD: Scenario:{} -------------------------\n", scenario.getScenarioName());
 
         reportBuilder = ZeroCodeReportBuilder.newInstance().timeStamp(LocalDateTime.now());
@@ -367,7 +367,7 @@ public class ZeroCodeMultiStepsScenarioRunnerImpl implements ZeroCodeMultiStepsS
 
     @Override
     public boolean runChildStep(ScenarioSpec scenarioSpec, BiConsumer testPassHandler) {
-
+        System.out.println("-----======运行子步骤");
         scenarioSpec.getSteps()
                 .forEach(step -> testPassHandler.accept(scenarioSpec.getScenarioName(), step.getName()));
 
