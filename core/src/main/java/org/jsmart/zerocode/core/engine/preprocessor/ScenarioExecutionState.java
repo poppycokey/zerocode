@@ -23,8 +23,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-public class ScenarioExecutionState {
+/*
+* @Description: 场景执行结果
+* @author: aries
+* @date: 2019-02-22 15:32
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/public class ScenarioExecutionState {
     private String scenarioStateTemplate = "{\n" +
             "  ${STEP_REQUEST_RESPONSE_SECTION}\n" +
             "}";

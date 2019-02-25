@@ -80,7 +80,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
          * Read the host, port, context etc from the inline annotation instead of a properties file
          */
         this.hostProperties = testClass.getAnnotation(HostProperties.class);
-
+//设置基础参数
         if (this.hostProperties != null) {
             this.host = hostProperties.host();
             this.port = hostProperties.port();
@@ -142,6 +142,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
     }
 
     private ZeroCodeMultiStepsScenarioRunner getInjectedMultiStepsRunner() {
+        System.out.println("注入多步骤运行器");
         zeroCodeMultiStepsScenarioRunner = getMainModuleInjector().getInstance(ZeroCodeMultiStepsScenarioRunner.class);
         return zeroCodeMultiStepsScenarioRunner;
     }
@@ -174,6 +175,13 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
         return kafkaClientAnnotated != null ? kafkaClientAnnotated.value() : ZerocodeCustomKafkaClient.class;
     }
 
+    /*
+    * @Description: 获取定制http客户端或默认客户端
+    * @author: aries
+    * @date: 2019-02-22 11:39
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     private Class<? extends BasicHttpClient> getCustomHttpClientOrDefault() {
         final UseHttpClient httpClientAnnotated = testClass.getAnnotation(UseHttpClient.class);
         return httpClientAnnotated != null ? httpClientAnnotated.value() : SslTrustHttpClient.class;
@@ -238,6 +246,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
     }
 
     private ZeroCodeMultiStepsScenarioRunner createZeroCodeMultiStepRunner() {
+        System.out.println("创建多步骤运行器");
         final ZeroCodeMultiStepsScenarioRunner multiStepsRunner = getInjectedMultiStepsRunner();
 
         /*

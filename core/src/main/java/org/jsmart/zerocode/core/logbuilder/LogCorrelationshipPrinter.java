@@ -13,7 +13,13 @@ import static java.time.LocalDateTime.now;
 import static org.jsmart.zerocode.core.domain.reports.ZeroCodeReportProperties.RESULT_FAIL;
 import static org.jsmart.zerocode.core.domain.reports.ZeroCodeReportProperties.RESULT_PASS;
 import static org.jsmart.zerocode.core.domain.reports.ZeroCodeReportProperties.TEST_STEP_CORRELATION_ID;
-
+/*
+* @Description: 日志相关输出
+* @author: aries
+* @date: 2019-02-22 16:59
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/
 public class LogCorrelationshipPrinter {
     private static final String DISPLAY_DEMARCATION_ = "\n--------- " + TEST_STEP_CORRELATION_ID + " %s ---------";
 

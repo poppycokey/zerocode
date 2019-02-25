@@ -24,6 +24,7 @@ import com.google.inject.name.Named;
 import com.jayway.jsonpath.JsonPath;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.jsmart.zerocode.core.engine.assertion.*;
+import org.jsmart.zerocode.core.utils.DateUtils;
 import org.jsmart.zerocode.core.utils.SmartUtils;
 
 import java.io.IOException;
@@ -39,11 +40,17 @@ import static java.lang.String.format;
 import static java.util.UUID.randomUUID;
 import static org.apache.commons.lang.StringEscapeUtils.escapeJava;
 import static org.slf4j.LoggerFactory.getLogger;
-
+/*
+* @Description: json测试处理实现
+* @author: aries
+* @date: 2019-02-22 15:26
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/
 public class ZeroCodeJsonTestProcesorImpl implements ZeroCodeJsonTestProcesor {
 
     private static final org.slf4j.Logger LOGGER = getLogger(ZeroCodeJsonTestProcesorImpl.class);
-
+//    配置属性列表
     final List<String> propertyKeys = new ArrayList<>();
     final Properties properties = new Properties();
 
@@ -75,6 +82,13 @@ public class ZeroCodeJsonTestProcesorImpl implements ZeroCodeJsonTestProcesor {
     );
 
     /*
+     * expand expression
+     */
+    private static  final String TIME_LOCATION_FORMAT = "TIME.LOCATION.FORMAT:";
+
+    private static final List<String> expandTokens = Arrays.asList(TIME_LOCATION_FORMAT);
+
+    /*
      * Assertion place holders
      */
     public static final String ASSERT_VALUE_NOT_NULL = "$NOT.NULL";
@@ -100,7 +114,13 @@ public class ZeroCodeJsonTestProcesorImpl implements ZeroCodeJsonTestProcesor {
         this.hostFileName = hostFileName;
         loadAnnotatedHostProperties();
     }
-
+    /*
+    * @Description: 解析json
+    * @author: aries
+    * @date: 2019-02-25 09:25
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     @Override
     public String resolveStringJson(String requestJsonOrAnyString, String scenarioStateJson) {
         Map<String, Object> parammap = new HashMap<>();
@@ -143,6 +163,23 @@ public class ZeroCodeJsonTestProcesorImpl implements ZeroCodeJsonTestProcesor {
                 }
             });
 
+            expandTokens.forEach(expandTokens ->{
+                if (runTimeToken.startsWith(expandTokens)){
+                    System.out.println(runTimeToken);
+                    String area = "";
+                    String format = "";
+                    Pattern compile = Pattern.compile(TIME_LOCATION_FORMAT+"(.+)");
+                    Matcher matcher = compile.matcher(runTimeToken);
+                    if (matcher.find()) {
+                        System.out.println(matcher.group(1));
+                        String[] split = matcher.group(1).split(",");
+                        area = split[0];
+                        format = split[1];
+                    }
+                    String areaDate = DateUtils.getAreaDate(area, format);
+                    parammap.put(runTimeToken,areaDate);
+                }
+            });
             if (isPropertyKey(runTimeToken)) {
                 parammap.put(runTimeToken, properties.get(runTimeToken));
             }
@@ -154,7 +191,13 @@ public class ZeroCodeJsonTestProcesorImpl implements ZeroCodeJsonTestProcesor {
 
         return resolveJsonPaths(resolvedFromTemplate, scenarioStateJson);
     }
-
+    /*
+    * @Description: 解析json中表达式
+    * @author: aries
+    * @date: 2019-02-25 09:53
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     @Override
     public List<String> getAllTokens(String requestJsonAsString) {
         List<String> keyTokens = new ArrayList<>();
@@ -168,6 +211,13 @@ public class ZeroCodeJsonTestProcesorImpl implements ZeroCodeJsonTestProcesor {
         return keyTokens;
     }
 
+    /*
+    * @Description: 解析json路径参数
+    * @author: aries
+    * @date: 2019-02-25 10:52
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     @Override
     public String resolveJsonPaths(String jsonString, String scenarioState) {
         List<String> jsonPaths = getAllJsonPathTokens(jsonString);
@@ -213,6 +263,13 @@ public class ZeroCodeJsonTestProcesorImpl implements ZeroCodeJsonTestProcesor {
         return sub.replace(jsonString);
     }
 
+    /*
+    * @Description: 获取所有引用参数地址
+    * @author: aries
+    * @date: 2019-02-25 10:59
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     @Override
     public List<String> getAllJsonPathTokens(String requestJsonAsString) {
         List<String> jsonPaths = new ArrayList<>();
@@ -371,6 +428,13 @@ public class ZeroCodeJsonTestProcesorImpl implements ZeroCodeJsonTestProcesor {
         }
     }
 
+    /*
+    * @Description: 断言测试结果
+    * @author: aries
+    * @date: 2019-02-25 15:17
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     @Override
     public List<AssertionReport> assertAllAndReturnFailed(List<JsonAsserter> asserters, String executionResult) {
 

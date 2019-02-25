@@ -83,7 +83,7 @@ public class ZeroCodeMultiStepsScenarioRunnerImpl implements ZeroCodeMultiStepsS
         LOGGER.info("\n-------------------------- BDD: Scenario:{} -------------------------\n", scenario.getScenarioName());
 
         reportBuilder = ZeroCodeReportBuilder.newInstance().timeStamp(LocalDateTime.now());
-
+//        场景执行结果对象
         ScenarioExecutionState scenarioExecutionState = new ScenarioExecutionState();
 
         final int scenarioLoopTimes = scenario.getLoop() == null ? 1 : scenario.getLoop();
@@ -144,6 +144,7 @@ public class ZeroCodeMultiStepsScenarioRunnerImpl implements ZeroCodeMultiStepsS
                         );
 
                         final LocalDateTime requestTimeStamp = LocalDateTime.now();
+//                        读取json并选择方式执行
                         switch (serviceType(serviceName, operationName)) {
                             case REST_CALL:
                                 serviceName = getFullyQualifiedUrl(serviceName, host, port, applicationContext);

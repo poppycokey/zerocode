@@ -21,6 +21,13 @@ import org.jsmart.zerocode.core.engine.assertion.JsonAsserter;
 
 import java.util.List;
 
+/*
+* @Description: core-测试处理器
+* @author: aries
+* @date: 2019-02-25 15:15
+* @email: zbl686868@126.com
+* @phone: 17611305537
+*/
 public interface ZeroCodeJsonTestProcesor {
 
     String resolveStringJson(String requestJsonAsString, String resolvedScenarioState);
