@@ -18,22 +18,6 @@ public class DateUtils {
     }
 
     /**
-     * format date
-     *
-     * @param date
-     * @param toFormat
-     * @return date
-     */
-    public static String dateToString(Date date, String toFormat) {
-        if (date == null) {
-            return "";
-        }
-        SimpleDateFormat df = new SimpleDateFormat(toFormat);
-        df.setLenient(false);
-        return df.format(date);
-    }
-
-    /**
      * get area date By area
      *
      * @param area
