@@ -45,7 +45,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(ZeroCodeUnitRunner.class);
 
     private ZeroCodeMultiStepsScenarioRunner zeroCodeMultiStepsScenarioRunner;
-//    当前测试类
+    //    当前测试类
     private final Class<?> testClass;
     private Injector injector;
     private SmartUtils smartUtils;
@@ -55,7 +55,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
     private int port;
     private List<String> smartTestCaseNames = new ArrayList<>();
     private String currentTestCase;
-//    日志关联对象
+    //    日志关联对象
     private LogCorrelationshipPrinter logCorrelationshipPrinter;
     protected boolean testRunCompleted;
     protected boolean passed;
@@ -70,7 +70,7 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
      */
     public ZeroCodeUnitRunner(Class<?> klass) throws InitializationError {
         super(klass);
-        System.out.println("-----======测试名称："+klass.getName());
+        System.out.println("-----======测试名称：" + klass.getName());
         this.testClass = klass;
         this.smartUtils = getInjectedSmartUtilsClass();
 
@@ -103,13 +103,14 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
 
         handleNoRunListenerReport(reportListener);
     }
-/*
-* @Description: 真正执行测试的方法，每个测试方法都会执行runChild
-* @author: aries
-* @date: 2019-02-21 14:24
-* @email: zbl686868@126.com
-* @phone: 17611305537
-*/
+
+    /*
+     * @Description: 真正执行测试的方法，每个测试方法都会执行runChild
+     * @author: aries
+     * @date: 2019-02-21 14:24
+     * @email: zbl686868@126.com
+     * @phone: 17611305537
+     */
     @Override
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
 
@@ -155,7 +156,6 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
             String serverEnv = envAnnotation != null ? envAnnotation.value() : "config_hosts.properties";
 
             serverEnv = getEnvSpecificConfigFile(serverEnv, testClass);
-
             Class<? extends BasicHttpClient> runtimeHttpClient = getCustomHttpClientOrDefault();
             Class<? extends BasicKafkaClient> runtimeKafkaClient = getCustomKafkaClientOrDefault();
 
@@ -176,12 +176,12 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
     }
 
     /*
-    * @Description: 获取定制http客户端或默认客户端
-    * @author: aries
-    * @date: 2019-02-22 11:39
-    * @email: zbl686868@126.com
-    * @phone: 17611305537
-    */
+     * @Description: 获取定制http客户端或默认客户端
+     * @author: aries
+     * @date: 2019-02-22 11:39
+     * @email: zbl686868@126.com
+     * @phone: 17611305537
+     */
     private Class<? extends BasicHttpClient> getCustomHttpClientOrDefault() {
         final UseHttpClient httpClientAnnotated = testClass.getAnnotation(UseHttpClient.class);
         return httpClientAnnotated != null ? httpClientAnnotated.value() : SslTrustHttpClient.class;
@@ -297,13 +297,14 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
             eachNotifier.fireTestFinished();
         }
     }
+
     /*
-    * @Description: 构建报告并写入到文件
-    * @author: aries
-    * @date: 2019-02-21 14:59
-    * @email: zbl686868@126.com
-    * @phone: 17611305537
-    */
+     * @Description: 构建报告并写入到文件
+     * @author: aries
+     * @date: 2019-02-21 14:59
+     * @email: zbl686868@126.com
+     * @phone: 17611305537
+     */
     private void buildReportAndPrintToFile(Description description) {
         ZeroCodeExecResultBuilder reportResultBuilder = newInstance().loop(0).scenarioName(description.getClassName());
         reportResultBuilder.step(logCorrelationshipPrinter.buildReportSingleStep());
@@ -324,13 +325,14 @@ public class ZeroCodeUnitRunner extends BlockJUnit4ClassRunner {
         logCorrelationshipPrinter.result(passed);
         logCorrelationshipPrinter.buildResponseDelay();
     }
-/*
-* @Description: 准备request报告
-* @author: aries
-* @date: 2019-02-20 17:07
-* @email: zbl686868@126.com
-* @phone: 17611305537
-*/
+
+    /*
+     * @Description: 准备request报告
+     * @author: aries
+     * @date: 2019-02-20 17:07
+     * @email: zbl686868@126.com
+     * @phone: 17611305537
+     */
     private String prepareRequestReport(Description description) {
         logCorrelationshipPrinter = LogCorrelationshipPrinter.newInstance(LOGGER);
         logCorrelationshipPrinter.stepLoop(0);

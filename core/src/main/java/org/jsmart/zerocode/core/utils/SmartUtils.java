@@ -112,6 +112,13 @@ public class SmartUtils {
                 });
     }
 
+    /*
+    * @Description: 美化json
+    * @author: aries
+    * @date: 2019-03-21 15:37
+    * @email: zbl686868@126.com
+    * @phone: 17611305537
+    */
     public static String prettyPrintJson(String jsonString) {
         final ObjectMapper objectMapper = new ObjectMapperProvider().get();
         try {
